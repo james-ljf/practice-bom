@@ -1,4 +1,4 @@
-package com.practice.bom.config;
+package com.practice.bom.config.kafka;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

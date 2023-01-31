@@ -1,4 +1,4 @@
-package com.practice.bom.entity;
+package com.practice.bom.entity.kafka;
 
 import lombok.Data;
 

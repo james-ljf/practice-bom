@@ -9,7 +9,7 @@ server:
 
 spring:
   application:
-    name: ractice-bom
+    name: practice-bom
   redis:
     host: 127.0.0.1
     port: 6379

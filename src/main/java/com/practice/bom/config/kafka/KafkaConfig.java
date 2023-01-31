@@ -1,4 +1,4 @@
-package com.practice.bom.config;
+package com.practice.bom.config.kafka;
 
 import com.practice.bom.constants.KafkaTopicsConstants;
 import lombok.RequiredArgsConstructor;

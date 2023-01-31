@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * @author ljf
- * @description
+ * @description kafka监听消息
  * @date 2023/1/5 5:25 PM
  */
 @Slf4j
