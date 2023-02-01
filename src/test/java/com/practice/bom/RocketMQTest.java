@@ -37,7 +37,7 @@ public class RocketMQTest {
         notice.setHasRead(1);
 //        rocketMqService.convertAndSend(RocketMqConstants.PRODUCER_GROUP, JSON.toJSONString(notice));
 //        rocketMqService.asyncSend(RocketMqConstants.PRODUCER_GROUP, MessageBuilder.withPayload(notice).build());
-        SendResult sendResult = rocketMqService.send(RocketMqConstants.PRODUCER_GROUP, "_test", notice);
+        SendResult sendResult = rocketMqService.send(RocketMqConstants.TEST_TOPIC, "_test", notice);
         Assert.assertNotNull(sendResult);
     }
 
@@ -50,8 +50,18 @@ public class RocketMQTest {
             notice.setName("这是一个rocketmq通知" + i);
             notice.setDescription("恭喜你，成为资深的JAVA程序员菜鸡。");
             notice.setHasRead(i);
-            rocketMqService.asyncSend(RocketMqConstants.PRODUCER_GROUP, MessageBuilder.withPayload(notice).build());
+            rocketMqService.asyncSend(RocketMqConstants.TEST_TOPIC, MessageBuilder.withPayload(notice).build());
         }
+    }
+
+    @Test
+    public void testTransactionSend() {
+        Notice notice = new Notice();
+        notice.setId(IdUtil.getSnowflakeNextIdStr());
+        notice.setName("这是一个rocketmq通知");
+        notice.setDescription("恭喜你，成为资深的JAVA程序员菜鸡。");
+        notice.setHasRead(1);
+        rocketMqService.sendTransaction(RocketMqConstants.TEST_TOPIC, "_test_transaction", notice, notice);
     }
 
 }

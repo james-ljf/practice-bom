@@ -7,12 +7,12 @@ import org.springframework.stereotype.Component;
 
 /**
  * @author ljf
- * @description 全局消息异常处理器
+ * @description kafka全局消息异常处理器
  * @date 2023/1/12 2:48 PM
  */
 @Slf4j
 @Component
-public class ListenerGlobalErrorHandler {
+public class KafkaListenerGlobalErrorHandler {
 
     @Bean
     public ConsumerAwareListenerErrorHandler globalListenerErrorHandler() {

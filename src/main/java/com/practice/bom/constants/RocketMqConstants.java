@@ -17,4 +17,9 @@ public class RocketMqConstants {
      */
     public static final String CONSUMER_GROUP = "practice-bom-consumer";
 
+    /**
+     * 消息主题
+     */
+    public static final String TEST_TOPIC = "test-topic";
+
 }
