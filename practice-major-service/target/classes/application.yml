@@ -1,0 +1,47 @@
+server:
+  port: 8088
+  servlet:
+    context-path: /practice-bom
+    session:
+      timeout: PT3M
+      cookie:
+        secure: true
+
+spring:
+  application:
+    name: practice-major-service
+  cloud:
+    nacos:
+      discovery:
+        group: PRACTICE_MAJOR_GROUP
+      config:
+        group: PRACTICE_CONFIG_GROUP
+        server-addr: 127.0.0.1:8848
+        file-extension: yml
+  config:
+    import:
+      - optional:nacos:${spring.application.name}.${spring.cloud.nacos.config.file-extension}
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    timeout: 1000
+
+dubbo:
+  application:
+    name: practice-major-dubbo-server
+  protocol:
+    name: tri
+    port: -1
+    accesslog: true
+  registry:
+    id: dubbo-major
+    address: nacos://127.0.0.1:8848
+  config-center:
+    address: nacos://127.0.0.1:8848
+  metadata-report:
+    address: nacos://127.0.0.1:8848
+
+logging:
+  level:
+    com.practice.bom: debug
+

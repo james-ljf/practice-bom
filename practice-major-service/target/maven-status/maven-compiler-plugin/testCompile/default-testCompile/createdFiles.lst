@@ -1,0 +1,5 @@
+com/practice/bom/RocketMQTest.class
+com/practice/bom/CacheTest.class
+com/practice/bom/KafkaTest.class
+com/practice/bom/DelayQueueTest.class
+com/practice/bom/DubboTest.class

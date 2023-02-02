@@ -1,0 +1,6 @@
+com/practice/bom/entity/NoticeBO.class
+com/practice/bom/ProvideApplication.class
+com/practice/bom/util/MyLogLayout.class
+com/practice/bom/service/dubbo/DemoProcessServiceImpl.class
+com/practice/bom/service/impl/DemoServiceImpl.class
+com/practice/bom/service/DemoService.class
