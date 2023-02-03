@@ -1,4 +1,4 @@
-package com.practice.bom.listener;
+package com.practice.bom.action.notice;
 
 import com.practice.bom.constants.RocketMqConstants;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RocketMQMessageListener(topic = RocketMqConstants.TEST_TOPIC, consumerGroup = RocketMqConstants.CONSUMER_GROUP)
-public class RqMessageListener implements RocketMQListener<String> {
+public class RqMessageNotice implements RocketMQListener<String> {
 
 
     @Override

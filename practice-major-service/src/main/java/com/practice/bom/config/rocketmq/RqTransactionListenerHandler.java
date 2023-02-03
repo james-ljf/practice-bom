@@ -1,4 +1,4 @@
-package com.practice.bom.listener.handler.rocketmq;
+package com.practice.bom.config.rocketmq;
 
 import com.practice.bom.constants.GlobalStatus;
 import lombok.extern.slf4j.Slf4j;

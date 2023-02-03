@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * @author ljf
- * @description 延迟队列数据类
+ * @description 延迟队列数据类，需实现Delayed接口，以获得延迟的时间以及当前内容在延迟队列的顺序
  * @date 2023/1/29 2:13 PM
  */
 @Getter
@@ -35,7 +35,7 @@ public class DelayBase<T> implements Delayed {
     private LocalDateTime createdTime;
 
     /**
-     * 过期时间，默认60秒 单位ms
+     * 延迟时间，默认60秒 单位ms
      */
     private Long expireVal = 1000 * 30L;
 

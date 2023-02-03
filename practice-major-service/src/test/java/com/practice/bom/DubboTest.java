@@ -4,6 +4,7 @@ import com.practice.bom.model.UserNoticeDTO;
 import com.practice.bom.service.DemoProcessService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboReference;
+import org.apache.dubbo.rpc.RpcContext;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,6 +26,7 @@ public class DubboTest {
 
     @Test
     public void testRpc() {
+        RpcContext.getClientAttachment().setAttachment("params", "这是隐式传递参数");
         UserNoticeDTO userNoticeDTO = demoProcessService.getUserNoticeDetail();
         Assert.assertNotNull(userNoticeDTO);
         log.info("[testRpc ok] : res = {}", userNoticeDTO);

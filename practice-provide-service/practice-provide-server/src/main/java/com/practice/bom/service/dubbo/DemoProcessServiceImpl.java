@@ -11,7 +11,7 @@ import org.apache.dubbo.rpc.RpcContext;
 
 /**
  * @author ljf
- * @description
+ * @description dubbo接口实现
  * @date 2023/2/2 3:38 PM
  */
 @Slf4j
@@ -28,6 +28,8 @@ public class DemoProcessServiceImpl implements DemoProcessService {
         // 获取当前服务配置信息，所有配置信息都将转换为URL的参数
         String application = RpcContext.getServiceContext().getUrl().getParameter("application");
         log.info("[get rpc context info ok] ：serverIP = {}，application = {}", serverIp, application);
+        String params = RpcContext.getServerAttachment().getAttachment("params");
+        log.info("[get rpc context attachment value] : {}", params);
         NoticeBO noticeBO = demoService.getNotice();
         String userId = demoService.getUserId();
         UserNoticeDTO userNoticeDTO = new UserNoticeDTO();

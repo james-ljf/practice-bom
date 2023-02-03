@@ -3,7 +3,7 @@ package com.practice.bom;
 import cn.hutool.core.util.IdUtil;
 import com.practice.bom.constants.RocketMqConstants;
 import com.practice.bom.entity.Notice;
-import com.practice.bom.util.RocketMqService;
+import com.practice.bom.util.RocketMqHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.junit.Assert;
@@ -26,7 +26,7 @@ import javax.annotation.Resource;
 public class RocketMQTest {
 
     @Resource
-    private RocketMqService rocketMqService;
+    private RocketMqHelper rocketMqService;
 
     @Test
     public void testAsyncSend() {

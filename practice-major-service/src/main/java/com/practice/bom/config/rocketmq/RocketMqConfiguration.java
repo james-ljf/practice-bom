@@ -1,4 +1,4 @@
-package com.practice.bom.config;
+package com.practice.bom.config.rocketmq;
 
 import io.netty.channel.DefaultChannelId;
 import org.springframework.context.annotation.Bean;

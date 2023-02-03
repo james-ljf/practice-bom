@@ -23,9 +23,9 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class RedisService {
+public class RedisHelper {
 
-    private final Logger logger = LoggerFactory.getLogger(RedisService.class);
+    private final Logger logger = LoggerFactory.getLogger(RedisHelper.class);
 
     private final RedisTemplate<String, Object> redisTemplate;
 
@@ -36,7 +36,6 @@ public class RedisService {
      * @param timeout 时间(秒)
      */
     public void expire(String key, long timeout) {
-
         try {
             if (timeout > 0) {
                 redisTemplate.expire(key, timeout, TimeUnit.SECONDS);

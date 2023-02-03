@@ -24,10 +24,16 @@ public class KafkaSendCallbackHandler implements ProducerListener<Object, Object
     @Override
     public void onError(ProducerRecord<Object, Object> producerRecord, RecordMetadata recordMetadata, Exception e) {
         String resultStr = buildResult(producerRecord);
-        log.error("[kafka消息发送失败]: msg = {}, 可进行失败补偿", resultStr);
+        log.error("[kafka消息发送失败]: msg = {}, 可记录失败的消息", resultStr);
         e.printStackTrace();
     }
 
+    /**
+     * 构建消息日志输出
+     *
+     * @param producerRecord 消息
+     * @return text
+     */
     private String buildResult(ProducerRecord<Object, Object> producerRecord) {
         String topic = producerRecord.topic();
         return "<topic>: " + topic + ",\n <value> :" + producerRecord.value();

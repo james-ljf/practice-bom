@@ -1,4 +1,4 @@
-package com.practice.bom.util;
+package com.practice.bom.util.log;
 
 import ch.qos.logback.classic.pattern.ExtendedThrowableProxyConverter;
 import ch.qos.logback.classic.spi.ILoggingEvent;

@@ -4,7 +4,7 @@
 
 	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
-			<layout class="com.practice.bom.util.MyLogLayout" />
+			<layout class="com.practice.bom.util.log.MyLogLayout" />
 		</encoder>
 	</appender>
 	
@@ -17,7 +17,7 @@
 			<cleanHistoryOnStart>true</cleanHistoryOnStart>
 		</rollingPolicy>
 		<encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
-			<layout class="com.practice.bom.util.MyLogLayout" />
+			<layout class="com.practice.bom.util.log.MyLogLayout" />
 		</encoder>
 	</appender>
 

@@ -1,4 +1,4 @@
-package com.practice.bom.listener;
+package com.practice.bom.action.notice;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class KafkaMessageListener {
+public class KafkaMessageNotice {
 
     private final ObjectMapper objectMapper;
 

@@ -8,37 +8,45 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.practice.bom.listener.RedisPubListener;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.listener.PatternTopic;
+import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
+import javax.annotation.Resource;
 import java.time.Duration;
+import java.util.List;
 
 /**
  * @author ljf
  * @description redis配置
  * @date 2022/12/30 3:17 PM
  */
+@EnableCaching
 @Configuration
 @AutoConfigureAfter(RedisAutoConfiguration.class)
 public class RedisConfig {
+
+    @Resource
+    private List<RedisPubListener> redisMsgPubSubListenerList;
 
     @Bean
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory) {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setEnableTransactionSupport(true);
-        //key的序列化机制
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setHashKeySerializer(new StringRedisSerializer());
-        //设置Value的序列化机制
         redisTemplate.setValueSerializer(getJsonSerializer());
         redisTemplate.setHashValueSerializer(getJsonSerializer());
         redisTemplate.setConnectionFactory(factory);
@@ -50,14 +58,10 @@ public class RedisConfig {
         ObjectMapper om = new ObjectMapper();
         // 只针对非空的属性进行序列化
         om.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        // 访问类型
         om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-        // 将类的全名序列化到json字符串中
         om.activateDefaultTyping(LaissezFaireSubTypeValidator.instance,
                 ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.WRAPPER_ARRAY);
-        // 对于匹配不了的属性忽略报错信息
         om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        // 不包含任何属性的bean也不报错
         om.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         serializer.setObjectMapper(om);
         return serializer;
@@ -70,5 +74,23 @@ public class RedisConfig {
                 .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(getJsonSerializer()))
                 .entryTtl(Duration.ofMinutes(60));
     }
+
+    @Bean
+    public RedisMessageListenerContainer container(RedisConnectionFactory connectionFactory) {
+        RedisMessageListenerContainer container = new RedisMessageListenerContainer();
+        container.setConnectionFactory(connectionFactory);
+        if (redisMsgPubSubListenerList == null || redisMsgPubSubListenerList.size() <= 0) {
+            return container;
+        }
+        for (RedisPubListener redisPubListener : redisMsgPubSubListenerList) {
+            if (redisPubListener == null || StringUtils.isBlank(redisPubListener.getTopic())) {
+                continue;
+            }
+            // 一个订阅者对应一个主题通道信息
+            container.addMessageListener(redisPubListener, new PatternTopic(redisPubListener.getTopic()));
+        }
+        return container;
+    }
+
 
 }

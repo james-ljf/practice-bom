@@ -20,7 +20,7 @@ import java.util.UUID;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class RocketMqService {
+public class RocketMqHelper {
 
     private final RocketMQTemplate rocketMQTemplate;
 
@@ -189,9 +189,9 @@ public class RocketMqService {
                 .build();
         TransactionSendResult result = rocketMQTemplate.sendMessageInTransaction(topic, message, arg);
         if (result.getLocalTransactionState().equals(LocalTransactionState.COMMIT_MESSAGE) && result.getSendStatus().equals(SendStatus.SEND_OK)) {
-            log.info("事物消息发送成功");
+            log.info("事务消息发送成功");
         }
-        log.info("事物消息发送结果:{}", result);
+        log.info("事务消息发送结果:{}", result);
     }
 
 }

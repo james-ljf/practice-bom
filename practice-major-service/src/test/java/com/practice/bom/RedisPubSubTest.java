@@ -1,15 +1,14 @@
 package com.practice.bom;
 
 import cn.hutool.core.util.IdUtil;
-import com.alibaba.fastjson2.JSON;
-import com.practice.bom.constants.KafkaTopicsConstants;
+import com.alibaba.fastjson.JSON;
+import com.practice.bom.constants.RedisTopicConstants;
 import com.practice.bom.entity.Notice;
-import com.practice.bom.util.KafkaHelper;
+import com.practice.bom.service.RedisPubService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
@@ -17,31 +16,24 @@ import javax.annotation.Resource;
 /**
  * @author ljf
  * @description
- * @date 2023/1/5 5:32 PM
+ * @date 2023/2/3 4:25 PM
  */
 @Slf4j
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class KafkaTest {
+public class RedisPubSubTest {
 
     @Resource
-    private KafkaHelper kafkaHelper;
-
-    @Resource
-    private KafkaTemplate<String, String> kafkaTemplate;
+    private RedisPubService redisPubService;
 
     @Test
-    public void testSend() {
-        kafkaHelper.send(KafkaTopicsConstants.TOPIC_TEST, "我在发送呢，别急。");
-    }
-
-    @Test
-    public void testSendNotice() {
+    public void testPubMessage() {
         Notice notice = new Notice();
         notice.setId(IdUtil.getSnowflakeNextIdStr());
         notice.setName("来自星星的中奖通知");
         notice.setDescription("恭喜你，成为资深的JAVA程序员菜鸡。");
-        notice.setHasRead(1);
-        kafkaHelper.send(KafkaTopicsConstants.TOPIC_NOTICE, JSON.toJSONString(notice));
+        notice.setHasRead(99);
+        redisPubService.pubMessage(RedisTopicConstants.TEST_PUB_SUB.getTopic(), JSON.toJSONString(notice));
     }
+
 }
