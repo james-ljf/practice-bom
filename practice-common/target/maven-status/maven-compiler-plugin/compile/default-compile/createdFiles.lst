@@ -1,5 +1,0 @@
-com/practice/bom/constants/GlobalConstants.class
-com/practice/bom/constants/GlobalStatus.class
-com/practice/bom/constants/RocketMqConstants.class
-com/practice/bom/constants/KafkaTopicsConstants.class
-com/practice/bom/config/RedisConfig.class
