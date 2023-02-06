@@ -8,8 +8,6 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
-import com.practice.bom.listener.RedisPubListener;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
 import org.springframework.cache.annotation.EnableCaching;
@@ -17,16 +15,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.listener.PatternTopic;
-import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-import javax.annotation.Resource;
 import java.time.Duration;
-import java.util.List;
 
 /**
  * @author ljf
@@ -38,8 +33,10 @@ import java.util.List;
 @AutoConfigureAfter(RedisAutoConfiguration.class)
 public class RedisConfig {
 
-    @Resource
-    private List<RedisPubListener> redisMsgPubSubListenerList;
+    @Bean
+    public LettuceConnectionFactory initConnectionFactory(){
+        return new LettuceConnectionFactory();
+    }
 
     @Bean
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory) {
@@ -74,23 +71,5 @@ public class RedisConfig {
                 .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(getJsonSerializer()))
                 .entryTtl(Duration.ofMinutes(60));
     }
-
-    @Bean
-    public RedisMessageListenerContainer container(RedisConnectionFactory connectionFactory) {
-        RedisMessageListenerContainer container = new RedisMessageListenerContainer();
-        container.setConnectionFactory(connectionFactory);
-        if (redisMsgPubSubListenerList == null || redisMsgPubSubListenerList.size() <= 0) {
-            return container;
-        }
-        for (RedisPubListener redisPubListener : redisMsgPubSubListenerList) {
-            if (redisPubListener == null || StringUtils.isBlank(redisPubListener.getTopic())) {
-                continue;
-            }
-            // 一个订阅者对应一个主题通道信息
-            container.addMessageListener(redisPubListener, new PatternTopic(redisPubListener.getTopic()));
-        }
-        return container;
-    }
-
 
 }
