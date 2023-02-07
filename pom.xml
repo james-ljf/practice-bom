@@ -8,6 +8,7 @@
         <module>practice-common</module>
         <module>practice-major-service</module>
         <module>practice-provide-service</module>
+        <module>practice-spring-framework</module>
     </modules>
 
     <parent>
@@ -100,6 +101,12 @@
             <artifactId>junit</artifactId>
             <version>4.13.2</version>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>13.0</version>
         </dependency>
     </dependencies>
 

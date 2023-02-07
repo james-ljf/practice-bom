@@ -1,0 +1,27 @@
+server:
+  port: 8090
+  servlet:
+    context-path: /practice-bom
+    session:
+      timeout: PT3M
+      cookie:
+        secure: true
+
+spring:
+  application:
+    name: practice-major-service
+  cloud:
+    nacos:
+      discovery:
+        group: PRACTICE_SPRING_FRAMEWORK_GROUP
+      config:
+        group: PRACTICE_CONFIG_GROUP
+        server-addr: 127.0.0.1:8848
+        file-extension: yml
+  config:
+    import:
+      - optional:nacos:${spring.application.name}.${spring.cloud.nacos.config.file-extension}
+
+logging:
+  level:
+    com.practice.bom: debug

@@ -1,6 +1,7 @@
 package com.practice.bom.config;
 
 import com.practice.bom.listener.RedisPubListener;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,7 +9,6 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.listener.PatternTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -16,11 +16,11 @@ import java.util.List;
  * @description
  * @date 2023/2/6 2:20 PM
  */
+@RequiredArgsConstructor
 @Configuration
 public class RedisPubConfig {
 
-    @Resource
-    private List<RedisPubListener> redisMsgPubSubListenerList;
+    private final List<RedisPubListener> redisMsgPubSubListenerList;
 
     @Bean
     public RedisMessageListenerContainer container(RedisConnectionFactory connectionFactory) {
