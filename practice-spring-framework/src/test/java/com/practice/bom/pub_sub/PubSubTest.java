@@ -28,4 +28,5 @@ public class PubSubTest {
         applicationContext.publishEvent(new WeiboPubEvent("今天阳光真好！"));
     }
 
+
 }

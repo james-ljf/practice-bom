@@ -26,18 +26,10 @@
 		
 	<!-- MyBatis -->
 	<logger name="org.mybatis" level="INFO" />
-	
-	<logger name="com.mongo" level="INFO"/>
-	
 	<logger name="java.sql.Statement" level="INFO" />  
-	<logger name="java.sql.PreparedStatement" level="INFO" />  
-	
+	<logger name="java.sql.PreparedStatement" level="INFO" />
 	<logger name="org.springframework.data.mongodb" level="INFO"/>
-
-	<logger name="org.apache.kafka.clients.consumer.ConsumerConfig" level="off" />
-	<logger name="org.apache.kafka.clients.consumer.internals.ConsumerCoordinator" level="OFF"/>
 	<logger name="org.eclipse" level="INFO"/>
-	<logger name="org.mongodb.driver.cluster" level="INFO"/>
 	<root level="INFO">
 		<appender-ref ref="console" />
 		<appender-ref ref="businessFile" />
