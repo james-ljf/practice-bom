@@ -15,4 +15,7 @@
 （2）在构造RestTemplate的时候，注入拦截器拦截请求，根据不同的算法重新构建请求。
 （3）使用注解和Spring的扩展点，RestTemplate创建的时候，注入拦截器拦截请求，根据不同的算法重新构建请求。
 
-本例子使用的是第3种方案，通过自定义注解实现。
+本例子使用的是第3种方案，通过自定义注解实现，大致思路如下：
+（1）自定义注解@MyLoadBalanced
+（2）利用Spring的扩展点SmartInitializingSingleton注入拦截器
+（3）在RestTemplate Bean添加注解@MyLoadBalanced
