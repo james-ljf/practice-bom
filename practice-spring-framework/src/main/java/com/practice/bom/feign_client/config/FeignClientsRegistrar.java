@@ -35,7 +35,6 @@ public class FeignClientsRegistrar implements ImportBeanDefinitionRegistrar {
         log.info("[registerBeanDefinitions.annotations]: {}", annotations);
         // 获取需要扫描的包的路径
         String basePackage = String.valueOf(annotations.get("basePackage"));
-        log.info("[registerBeanDefinitions.basePackage] : {}", basePackage);
         ClassPathScanningCandidateComponentProvider scanner = new ClassPathScanningCandidateComponentProvider(false) {
             /**
              * 判断资源是否为候选组件，此处直接返回true
