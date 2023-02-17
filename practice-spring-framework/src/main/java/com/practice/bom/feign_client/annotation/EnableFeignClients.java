@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 
 /**
  * @author ljf
- * @description 通过 @EnableFeignClients引入FeignClientsRegistrar客户端注册类
+ * @description 通过 @Import引入FeignClientsRegistrar客户端注册类
  * @date 2023/2/9 3:18 PM
  */
 @Target(ElementType.TYPE)
