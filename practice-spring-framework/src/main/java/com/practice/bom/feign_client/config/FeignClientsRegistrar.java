@@ -33,7 +33,6 @@ public class FeignClientsRegistrar implements ImportBeanDefinitionRegistrar {
             return;
         }
         log.info("[registerBeanDefinitions.annotations]: {}", annotations);
-        // 获取需要扫描的包的路径
         String basePackage = String.valueOf(annotations.get("basePackage"));
         ClassPathScanningCandidateComponentProvider scanner = new ClassPathScanningCandidateComponentProvider(false) {
             /**
@@ -48,9 +47,8 @@ public class FeignClientsRegistrar implements ImportBeanDefinitionRegistrar {
                 return true;
             }
         };
-        // 扫描注解MyFeignClient的类
+        // 扫描注解MyFeignClient的类，根据包路径查找候选的组件
         scanner.addIncludeFilter(new AnnotationTypeFilter(MyFeignClient.class));
-        // 根据包路径查找候选的组件
         Set<BeanDefinition> beanDefinitionSet = scanner.findCandidateComponents(basePackage);
         for (BeanDefinition beanDefinition : beanDefinitionSet) {
             // 向构造方法中添加目标bean的全路径名，Spring会自动转换成Class对象

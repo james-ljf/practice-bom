@@ -50,7 +50,6 @@ public class FeignFactoryBean<T> implements FactoryBean<T>, InvocationHandler {
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         String result = null;
-        // 获取方法上的注解信息
         MyFeignClient myFeignClient = targetClass.getAnnotation(MyFeignClient.class);
         FeignClientMethod feignClientMethod = method.getAnnotation(FeignClientMethod.class);
         if (myFeignClient == null || feignClientMethod == null) {
@@ -60,7 +59,6 @@ public class FeignFactoryBean<T> implements FactoryBean<T>, InvocationHandler {
         log.info("[FeignFactoryBean.invoke]：注解上的信息为 name = {}, path = {}", myFeignClient.name(), feignClientMethod.path());
         String urlPath = hostMap.get(myFeignClient.name()) + path;
         log.info("[FeignFactoryBean.invoke]：转换后的请求路径为{}", urlPath);
-        // 发起请求
         result = post(urlPath);
         log.info("[FeignFactoryBean.invoke]：请求结果 = {}", result);
         return result;
@@ -78,16 +76,13 @@ public class FeignFactoryBean<T> implements FactoryBean<T>, InvocationHandler {
             URL url = new URL(urlPath);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
-            // 设置是否向HttpURLConnection输出
             connection.setDoOutput(true);
-            // 设置是否从httpUrlConnection读入
             connection.setDoInput(true);
             connection.setUseCaches(false);
             connection.setRequestProperty("Content-Type", "application/json;charset=utf-8");
             connection.connect();
             int responseCode = connection.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_OK) {
-                //定义 BufferedReader 输入流来读取URL的响应
                 BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 String line;
                 while ((line = in.readLine()) != null) {
