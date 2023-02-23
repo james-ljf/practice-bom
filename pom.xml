@@ -9,6 +9,7 @@
         <module>practice-major-service</module>
         <module>practice-provide-service</module>
         <module>practice-spring-framework</module>
+        <module>netty-service</module>
     </modules>
 
     <parent>
