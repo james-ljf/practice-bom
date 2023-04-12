@@ -1,4 +1,4 @@
-package com.practice.bom.util;
+package com.practice.bom.function;
 
 import lombok.extern.slf4j.Slf4j;
 

@@ -1,4 +1,4 @@
-package com.practice.bom.util;
+package com.practice.bom.function;
 
 import java.util.StringJoiner;
 import java.util.function.Function;

@@ -1,6 +1,6 @@
 package com.practice.bom.lazy_test;
 
-import com.practice.bom.util.Lazy;
+import com.practice.bom.function.Lazy;
 import lombok.Data;
 
 import java.util.Set;

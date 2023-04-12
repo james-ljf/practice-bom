@@ -3,7 +3,7 @@ package com.practice.bom.lazy_test;
 import cn.hutool.core.util.IdUtil;
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Sets;
-import com.practice.bom.util.Lazy;
+import com.practice.bom.function.Lazy;
 
 import java.util.Set;
 

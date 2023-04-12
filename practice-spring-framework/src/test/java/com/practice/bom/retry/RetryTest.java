@@ -1,7 +1,7 @@
 package com.practice.bom.retry;
 
 import com.practice.bom.ApplicationTest;
-import com.practice.bom.util.RetryFunction;
+import com.practice.bom.function.RetryFunction;
 import org.junit.Test;
 
 /**
