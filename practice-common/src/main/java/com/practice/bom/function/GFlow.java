@@ -184,9 +184,9 @@ public interface GFlow<T> {
     }
 
     /**
-     * 流的缓存
+     * 流的缓存，将元素放到数组流中
      *
-     * @return GFlow<T>
+     * @return 返回列表类型的GFlow<T>
      */
     default GFlow<T> cache() {
         ArrayFlow<T> arrayFlow = new ArrayFlow<>();
