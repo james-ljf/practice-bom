@@ -9,6 +9,8 @@ import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 /**
  * 生成器流，看似本质是consumer of consumer，实则是consumer of callback。
@@ -192,6 +194,37 @@ public interface GFlow<T> {
         ArrayFlow<T> arrayFlow = new ArrayFlow<>();
         consume(arrayFlow::add);
         return arrayFlow;
+    }
+
+    /**
+     * 使用生成器构造Stream流
+     * 通过单独重载forEachRemaining方法，无需实现hasNext和next方法。
+     * 在Stream的底层逻辑中有一个AbstractPipeline.copyInto方法，会在真正执行流的时候调用Spliterator的forEachRemaining方法来遍历元素。
+     *
+     * @param flow 生成器
+     * @param <T> 类型
+     * @return Stream<T>
+     */
+    static <T> Stream<T> stream(GFlow<T> flow) {
+        Iterator<T> iterator = new Iterator<T>() {
+            @Override
+            public boolean hasNext() {
+                throw new NoSuchElementException();
+            }
+
+            @Override
+            public T next() {
+                throw new NoSuchElementException();
+            }
+
+            @Override
+            public void forEachRemaining(Consumer<? super T> action) {
+                flow.consume(action::accept);
+            }
+        };
+        return StreamSupport.stream(
+                Spliterators.spliteratorUnknownSize(iterator, Spliterator.ORDERED),
+                false);
     }
 
     static <T> T stop() {

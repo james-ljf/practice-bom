@@ -7,6 +7,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.UnaryOperator;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 
 /**
  * @Author ljf
@@ -50,6 +53,18 @@ public class FunctionTest extends ApplicationTest {
             }
         });
         System.out.printf("耗时: %dms\n", System.currentTimeMillis() - start);
+    }
+
+    @Test
+    public void testStream() {
+        GFlow<Integer> flow = c -> {
+            c.accept(0);
+            for (int i = 1; i < 5; i++) {
+                c.accept(i);
+            }
+        };
+        Stream<Integer> stream = GFlow.stream(flow);
+        System.out.println(stream.collect(Collectors.toList()));
     }
 
 }
